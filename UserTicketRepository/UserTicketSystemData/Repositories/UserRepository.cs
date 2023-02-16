@@ -28,7 +28,17 @@ namespace UserTicketSystemData.Repositories
             try
             {
                 var users = await _context.Users.Include(u => u.UserRoles).ThenInclude(ur => ur.Role).ToListAsync();
-                return _mapper.Map<IEnumerable<UserDto>>(users);
+                var mappedUsers = _mapper.Map<IEnumerable<UserDto>>(users);
+
+                int index = 0;
+                foreach(var u in mappedUsers) 
+                {
+                    // get the first user it reports to, this logic can be expanded when the user can report to one or more users, at this time just can report to one
+                    u.ReportsToId = users[index].ReportedUsers.FirstOrDefault()?.Id;
+                    index++;
+                }
+
+                return mappedUsers;
             }
             catch (Exception ex)
             {
@@ -42,7 +52,10 @@ namespace UserTicketSystemData.Repositories
             try
             {
                 var user = await _context.Users.Include(u => u.UserRoles).ThenInclude(ur => ur.Role).FirstOrDefaultAsync(u => u.Id == id);
-                return _mapper.Map<UserDto>(user);
+                var mappedUser = _mapper.Map<UserDto>(user);
+                // get the first user it reports to, this logic can be expanded when the user can report to one or more users, at this time just can report to one
+                mappedUser.ReportsToId = user.ReportedUsers.FirstOrDefault()?.Id;
+                return mappedUser;
             }
             catch (Exception ex)
             {
@@ -54,13 +67,9 @@ namespace UserTicketSystemData.Repositories
         {
             try
             {
-                var ExistingUser = await _context.Users.AnyAsync(u => u.Email == userDto.Email);
-                if (ExistingUser)
-                {
-                    throw new ArgumentException($"Duplicate user email");
-                }
                 var user = _mapper.Map<User>(userDto);
                 LoginHelpers.AddHashAndSalt(user, userDto);
+                user.JwtSecret = LoginHelpers.GenerateJwtSecret();
                 _context.Users.Add(user);
                 await _context.SaveChangesAsync();
                 return _mapper.Map<UserDto>(user);
@@ -124,18 +133,30 @@ namespace UserTicketSystemData.Repositories
 
         public async Task<UserDto> LoginAsync(LoginDto loginDto)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == loginDto.Email);
-            if (user == null)
-            {
-                throw new ArgumentException($"User with email {loginDto.Email} not found");
-            }
+            var user = await _context.Users.Include(u => u.UserRoles).FirstOrDefaultAsync(u => u.Email == loginDto.Email);
 
-            if (!LoginHelpers.VerifyPasswordHash(loginDto.Password, user.PasswordHash, user.PasswordSalt))
+            //user do not exists or password incorrect return null handle in upper layer
+            if (user == null || !LoginHelpers.VerifyPasswordHash(loginDto.Password, user.PasswordHash, user.PasswordSalt))
             {
-                throw new ArgumentException("Invalid password");
+                return null;
             }
 
             return _mapper.Map<UserDto>(user);
+        }
+
+        public async Task<UserDto> GetUserByEmailAsync(string email)
+        {
+            var user = await _context.Users.Include(u => u.UserRoles).FirstOrDefaultAsync(u => u.Email == email);
+            if (user == null)
+            {
+                return null;
+            }
+
+            UserDto userDto = null;
+            // Map dto with the result of the search
+            _mapper.Map(user, userDto);
+
+            return userDto;
         }
     }
 

@@ -43,5 +43,13 @@ namespace UserTicketSystemCore.Helpers
             user.PasswordHash = hashedPasswordBytes;
             user.PasswordSalt = salt;
         }
+
+        public static string GenerateJwtSecret(int length = 32)
+        {
+            var rng = new RNGCryptoServiceProvider();
+            var bytes = new byte[length];
+            rng.GetBytes(bytes);
+            return Convert.ToBase64String(bytes);
+        }
     }
 }

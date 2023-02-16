@@ -58,21 +58,22 @@ namespace UserTicketSystemData.Repositories
 
             _context.UserHierarchies.Add(userHierarchy);
             await _context.SaveChangesAsync();
-
-            userHierarchyDto.Id = userHierarchy.Id;
         }
 
         public async Task UpdateUserHierarchyAsync(UserHierarchyDto userHierarchyDto)
         {
-            var userHierarchy = await _context.UserHierarchies.FindAsync(userHierarchyDto.Id);
+            var existingHierarchies = await  _context.UserHierarchies.Where(x=> x.ReportingUserId == userHierarchyDto.ReportingUserId && x.UserId == userHierarchyDto.UserId).ToListAsync();
 
-            if (userHierarchy == null)
+            if (existingHierarchies == null)
             {
-                throw new ArgumentException($"User hierarchy with id {userHierarchyDto.Id} not found.");
+                throw new ArgumentException($"User hierarchy with id {userHierarchyDto.ReportingUserId} not found.");
             }
 
-            _mapper.Map(userHierarchyDto, userHierarchy);
+            _context.UserHierarchies.RemoveRange(existingHierarchies);
 
+            var userHierarchy = _mapper.Map<UserHierarchy>(userHierarchyDto);
+
+            _context.UserHierarchies.Add(userHierarchy);
             await _context.SaveChangesAsync();
         }
 

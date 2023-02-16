@@ -11,11 +11,13 @@ namespace UserTicketSystemCore.Interfaces
     {
         Task<IEnumerable<UserDto>> GetUsersAsync();
         Task<UserDto> GetUserByIdAsync(int id);
-        Task<UserDto> CreateUserAsync(UserDto user);
+        Task<UserDto> CreateUserAsync(LoginDto userDto);
         Task UpdateUserAsync(UserDto user);
         Task DeleteUserAsync(int id);
 
         Task<UserDto> LoginAsync(LoginDto loginDto);
+
+        Task<UserDto> GetUserByEmailAsync(string email);
     }
 
 }
