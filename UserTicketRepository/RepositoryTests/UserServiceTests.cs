@@ -167,6 +167,23 @@ namespace RepositoryTests
         }
 
         [TestMethod]
+        public async Task LoginAsync_ThrowsExceptionWhenInvalidCredentialsProvided()
+        {
+            // Arrange
+            var loginDto = new LoginDto
+            {
+                Email = "nonexistentuser@example.com",
+                Password = "wrongpassword"
+            };
+            _userRepositoryMock.Setup(ur => ur.LoginAsync(loginDto)).ReturnsAsync((UserDto)null);
+
+            //Act
+            var failedLogin = await _userService.LoginAsync(loginDto);
+            //Assert
+            Assert.IsNull(failedLogin);
+        }
+
+        [TestMethod]
         public async Task UpdateUserAsync_CallsUserRepositoryAndUpdateHierarchy()
         {
             // Arrange
