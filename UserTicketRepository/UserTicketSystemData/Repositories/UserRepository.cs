@@ -12,6 +12,7 @@ using UserTicketSystemCore.Models.Dtos;
 
 namespace UserTicketSystemData.Repositories
 {
+    //The repository is not called directly instead a service was created to follow the Open/Closed principle so logic gets added here and not on the upper layers in case you need to extend the functionality
     public class UserRepository : IUserRepository
     {
         private readonly UserTicketSystemContext _context;

@@ -2,11 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UserTicketSystemCore.Interfaces;
 using UserTicketSystemCore.Models;
 using UserTicketSystemCore.Models.Dtos;
+using UserTicketSystemCore.Models.LookUpModels;
 
 namespace UserTicketSystemData.Repositories
 {
@@ -21,9 +23,11 @@ namespace UserTicketSystemData.Repositories
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<TicketDto>> GetAllTicketsAsync()
+        public async Task<IEnumerable<TicketDto>> GetAllTicketsAsync(TicketLookUpParameters filters)
         {
-            var tickets = await _context.Tickets
+            var ticketsQuery = _context.Tickets.AsQueryable();
+            BuildTicketFilters(filters, ticketsQuery);
+            var tickets = await ticketsQuery
                 .Include(t => t.TicketType)
                 .Include(t => t.TicketStatus)
                 .Include(t => t.CreatedByUser)
@@ -31,6 +35,52 @@ namespace UserTicketSystemData.Repositories
                 .ToListAsync();
 
             return _mapper.Map<IEnumerable<TicketDto>>(tickets);
+        }
+
+
+        // separated method in case retrieving only one user tickets has additional logic
+        public async Task<IEnumerable<TicketDto>> GetAllTicketsForUserAsync(TicketLookUpParameters filters, int userId)
+        {
+            var ticketsQuery = _context.Tickets.Where(x=> x.Id == userId);
+
+            BuildTicketFilters(filters,ticketsQuery);
+
+            var tickets = await ticketsQuery
+                .Include(t => t.TicketType)
+                .Include(t => t.TicketStatus)
+                .Include(t => t.CreatedByUser)
+                .Include(t => t.UpdatedByUser)
+                .ToListAsync();
+
+            return _mapper.Map<IEnumerable<TicketDto>>(tickets);
+        }
+
+        private void BuildTicketFilters(TicketLookUpParameters filters, IQueryable<Ticket> ticketsQuery) 
+        {
+            if (filters.FromDate.HasValue)
+            {
+                ticketsQuery = ticketsQuery.Where(t => t.CreatedDatetime >= filters.FromDate.Value);
+            }
+
+            if (filters.ToDate.HasValue)
+            {
+                ticketsQuery = ticketsQuery.Where(t => t.CreatedDatetime <= filters.ToDate.Value);
+            }
+
+            if (filters.TicketType.HasValue)
+            {
+                ticketsQuery = ticketsQuery.Where(t => t.TicketType.Id == filters.TicketType.Value);
+            }
+
+            if (!string.IsNullOrEmpty(filters.TicketTitle))
+            {
+                ticketsQuery = ticketsQuery.Where(t => t.Title.Contains(filters.TicketTitle));
+            }
+
+            if (!string.IsNullOrEmpty(filters.Description))
+            {
+                ticketsQuery = ticketsQuery.Where(t => t.Description.Contains(filters.Description));
+            }
         }
 
         public async Task<TicketDto> GetTicketByIdAsync(Guid id)
