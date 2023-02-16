@@ -1,19 +1,15 @@
-using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using UsersMicroService.Services;
 using UserTicketSystemCore;
 using UserTicketSystemCore.Interfaces;
-using UserTicketSystemCore.Models;
 using UserTicketSystemCore.Models.Dtos;
-using UserTicketSystemData;
-using UserTicketSystemData.Repositories;
 
-namespace RepositoryTests
+namespace UserTests
 {
     [TestClass]
     public class UserServiceTests

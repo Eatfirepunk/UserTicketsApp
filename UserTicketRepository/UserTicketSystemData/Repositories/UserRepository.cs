@@ -35,7 +35,11 @@ namespace UserTicketSystemData.Repositories
                 foreach(var u in mappedUsers) 
                 {
                     // get the first user it reports to, this logic can be expanded when the user can report to one or more users, at this time just can report to one
-                    u.ReportsToId = users[index].ReportedUsers.FirstOrDefault()?.Id;
+                    var uId = users[index].ReportedUsers?.FirstOrDefault();
+                    if (uId != null) 
+                    {
+                        u.ReportsToId = uId.Id;
+                    }              
                     index++;
                 }
 
@@ -55,7 +59,8 @@ namespace UserTicketSystemData.Repositories
                 var user = await _context.Users.Include(u => u.UserRoles).ThenInclude(ur => ur.Role).FirstOrDefaultAsync(u => u.Id == id);
                 var mappedUser = _mapper.Map<UserDto>(user);
                 // get the first user it reports to, this logic can be expanded when the user can report to one or more users, at this time just can report to one
-                mappedUser.ReportsToId = user.ReportedUsers.FirstOrDefault()?.Id;
+                var uId = user.ReportedUsers?.FirstOrDefault();
+                mappedUser.ReportsToId = uId != null ? uId.Id : (int?)null;
                 return mappedUser;
             }
             catch (Exception ex)

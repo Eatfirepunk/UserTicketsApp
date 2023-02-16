@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UserTicketSystemCore.Interfaces;
 using UserTicketSystemCore.Models.Dtos;
 using UserTicketSystemCore.Services.Abstractions;
 
-namespace UserTicketSystemCore
+namespace UsersMicroService.Services
 {
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
         private readonly IUserHierarchyRepository _userHierarchyRepository;
 
-        public UserService(IUserRepository userRepository, IUserHierarchyRepository userHierarchyRepository) 
+        public UserService(IUserRepository userRepository, IUserHierarchyRepository userHierarchyRepository)
         {
             _userRepository = userRepository;
             _userHierarchyRepository = userHierarchyRepository;
@@ -38,7 +39,7 @@ namespace UserTicketSystemCore
 
                 return await _userRepository.GetUserByIdAsync(newUser.Id);
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 throw new Exception($"An error occurred while creating user with email {loginDto.Email}", ex);
             }
@@ -47,11 +48,11 @@ namespace UserTicketSystemCore
 
         public async Task DeleteUserAsync(int userId)
         {
-            try 
+            try
             {
                 await _userRepository.DeleteUserAsync(userId);
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 throw new Exception($"An error occurred while deleting the user {userId}", ex);
             }
@@ -76,7 +77,7 @@ namespace UserTicketSystemCore
         {
             try
             {
-               await _userRepository.UpdateUserAsync(userDto);
+                await _userRepository.UpdateUserAsync(userDto);
                 if (userDto.ReportsToId.HasValue)
                 {
                     var hierarchy = new UserHierarchyDto { UserId = userDto.Id, ReportingUserId = userDto.ReportsToId.Value };
