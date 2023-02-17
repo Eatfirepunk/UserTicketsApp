@@ -1,13 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "qxfZSq7WCGIP5fUYftPtIOKvbfmEpPIM+MVffin7ZtHw4k6M2dJ/cmh0KqI6XoOmVPBs/pM5jvwgHKUBtqNgTA==",
+  "dgSpecHash": "ozjf7Agm9EkEK21dteLHF3bzBGn8KrWw+fA5CHitWrzD5pbZIMstLcRdU4MOMGFjNYG4ji2vxk/8sw9jjlz4MA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\admin\\source\\repos\\UsersMicroService\\UserTests\\UserTests.csproj",
+  "projectFilePath": "C:\\Users\\admin\\Documents\\GitHub\\UserTicketsApp\\UsersMicroService\\UserTests\\UserTests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\admin\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\admin\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.0\\automapper.extensions.microsoft.dependencyinjection.12.0.0.nupkg.sha512",
     "C:\\Users\\admin\\.nuget\\packages\\castle.core\\5.1.1\\castle.core.5.1.1.nupkg.sha512",
     "C:\\Users\\admin\\.nuget\\packages\\coverlet.collector\\1.2.0\\coverlet.collector.1.2.0.nupkg.sha512",
+    "C:\\Users\\admin\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\3.1.32\\microsoft.aspnetcore.authentication.jwtbearer.3.1.32.nupkg.sha512",
     "C:\\Users\\admin\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\3.0.0\\microsoft.aspnetcore.jsonpatch.3.0.0.nupkg.sha512",
     "C:\\Users\\admin\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\3.0.0\\microsoft.aspnetcore.mvc.newtonsoftjson.3.0.0.nupkg.sha512",
     "C:\\Users\\admin\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",

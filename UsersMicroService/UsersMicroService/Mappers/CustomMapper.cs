@@ -12,6 +12,7 @@ namespace UsersMicroService.Mappers
     {
         public CustomMapper()
         {
+            CreateMap<UserHierarchy, UserHierarchyDto>().ReverseMap();
             CreateMap<Role, RoleDto>().ReverseMap();
             CreateMap<User, UserDto>()
                 .ForMember(dest => dest.Roles, opt => opt.MapFrom(src => src.UserRoles.Select(ur => ur.Role)))

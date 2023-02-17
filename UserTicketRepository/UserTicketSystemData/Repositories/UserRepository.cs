@@ -28,7 +28,9 @@ namespace UserTicketSystemData.Repositories
         {
             try
             {
-                var users = await _context.Users.Include(u => u.UserRoles).ThenInclude(ur => ur.Role).ToListAsync();
+                var users = await _context.Users.Include(u => u.UserRoles).ThenInclude(ur => ur.Role)
+                    .Include(userReportsTo => userReportsTo.ReportedUsers)
+                    .ToListAsync();
                 var mappedUsers = _mapper.Map<IEnumerable<UserDto>>(users);
 
                 int index = 0;
@@ -38,7 +40,7 @@ namespace UserTicketSystemData.Repositories
                     var uId = users[index].ReportedUsers?.FirstOrDefault();
                     if (uId != null) 
                     {
-                        u.ReportsToId = uId.Id;
+                        u.ReportsToId = uId.UserId;
                     }              
                     index++;
                 }
@@ -56,11 +58,14 @@ namespace UserTicketSystemData.Repositories
         {
             try
             {
-                var user = await _context.Users.Include(u => u.UserRoles).ThenInclude(ur => ur.Role).FirstOrDefaultAsync(u => u.Id == id);
+                var user = await _context.Users.Include(u => u.UserRoles).ThenInclude(ur => ur.Role)
+                                    .Include(userReportsTo => userReportsTo.ReportedUsers)
+                                    .FirstOrDefaultAsync(u => u.Id == id);
+                if (user == null) { return null; }
                 var mappedUser = _mapper.Map<UserDto>(user);
                 // get the first user it reports to, this logic can be expanded when the user can report to one or more users, at this time just can report to one
                 var uId = user.ReportedUsers?.FirstOrDefault();
-                mappedUser.ReportsToId = uId != null ? uId.Id : (int?)null;
+                mappedUser.ReportsToId = uId != null ? uId.UserId : (int?)null;
                 return mappedUser;
             }
             catch (Exception ex)
@@ -139,7 +144,7 @@ namespace UserTicketSystemData.Repositories
 
         public async Task<UserDto> LoginAsync(LoginDto loginDto)
         {
-            var user = await _context.Users.Include(u => u.UserRoles).FirstOrDefaultAsync(u => u.Email == loginDto.Email);
+            var user = await _context.Users.Include(u => u.UserRoles).ThenInclude(ur => ur.Role).FirstOrDefaultAsync(u => u.Email == loginDto.Email);
 
             //user do not exists or password incorrect return null handle in upper layer
             if (user == null || !LoginHelpers.VerifyPasswordHash(loginDto.Password, user.PasswordHash, user.PasswordSalt))

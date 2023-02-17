@@ -12,13 +12,15 @@ namespace UserTicketSystemCore.Helpers
     {
         public static bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
         {
-            using (var hmac = new HMACSHA512(passwordSalt))
+            byte[] saltedPasswordBytes = Encoding.UTF8.GetBytes(password).Concat(passwordSalt).ToArray();
+            byte[] computedHash;
+            using (var sha256 = SHA256.Create())
             {
-                var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
-                for (int i = 0; i < computedHash.Length; i++)
-                {
-                    if (computedHash[i] != passwordHash[i]) return false;
-                }
+                computedHash = sha256.ComputeHash(saltedPasswordBytes);
+            }
+            for (int i = 0; i < computedHash.Length; i++)
+            {
+                if (computedHash[i] != passwordHash[i]) return false;
             }
             return true;
         }

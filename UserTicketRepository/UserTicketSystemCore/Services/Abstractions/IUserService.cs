@@ -13,6 +13,6 @@ namespace UserTicketSystemCore.Services.Abstractions
         Task<UserDto> CreateUserAsync(LoginDto loginDto);
         Task UpdateUserAsync(UserDto userDto);
         Task DeleteUserAsync(int userId);
-        Task<UserDto> LoginAsync(LoginDto loginDto);
+        Task<string> LoginAsync(LoginDto loginDto);
     }
 }

@@ -18,6 +18,8 @@ namespace UserTicketSystemData
         public DbSet<TicketType> TicketTypes { get; set; }
         public DbSet<TicketStatus> TicketStatuses { get; set; }
 
+        public DbSet<UserRole> UserRoles { get; set; }
+
         public DbSet<UserHierarchy> UserHierarchies { get; set; }
 
 

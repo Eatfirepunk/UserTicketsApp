@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "FM4A2kdLD0/xpYa2hpUZ3Jz7/RQCg7vilX7VMDubyL7kr+lHNwQPwvwNmylq/MfXlHP19mbm2mULN2yT6zZkFw==",
+  "dgSpecHash": "1+wBnA0mWOPezlxkptEa60yrbuN0EIcUmBrKqF4WsqllayZtc6+p4yj41I0Kgj0fPaaUdiw43FpYzUor0pZoNg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\admin\\source\\repos\\UsersMicroService\\UsersMicroService\\UsersMicroService.csproj",
+  "projectFilePath": "C:\\Users\\admin\\Documents\\GitHub\\UserTicketsApp\\UsersMicroService\\UsersMicroService\\UsersMicroService.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\admin\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\admin\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.0\\automapper.extensions.microsoft.dependencyinjection.12.0.0.nupkg.sha512",
+    "C:\\Users\\admin\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\3.1.32\\microsoft.aspnetcore.authentication.jwtbearer.3.1.32.nupkg.sha512",
     "C:\\Users\\admin\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\3.0.0\\microsoft.aspnetcore.jsonpatch.3.0.0.nupkg.sha512",
     "C:\\Users\\admin\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\3.0.0\\microsoft.aspnetcore.mvc.newtonsoftjson.3.0.0.nupkg.sha512",
     "C:\\Users\\admin\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",

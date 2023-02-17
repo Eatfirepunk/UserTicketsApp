@@ -16,6 +16,7 @@ namespace UserTests
     {
         private Mock<IUserRepository> _userRepositoryMock;
         private Mock<IUserHierarchyRepository> _userHierarchyRepositoryMock;
+        private Mock<IRoleRepository> _roleRepository;
         private UserService _userService;
 
         [TestInitialize]
@@ -23,10 +24,11 @@ namespace UserTests
         {
             _userRepositoryMock = new Mock<IUserRepository>();
             _userHierarchyRepositoryMock = new Mock<IUserHierarchyRepository>();
-
+            _roleRepository = new Mock<IRoleRepository>();
             _userService = new UserService(
                 _userRepositoryMock.Object,
-                _userHierarchyRepositoryMock.Object
+                _userHierarchyRepositoryMock.Object,
+                _roleRepository.Object
             );
         }
 
@@ -102,7 +104,7 @@ namespace UserTests
                 .ReturnsAsync(newUser);
             _userRepositoryMock.Setup(r => r.GetUserByIdAsync(newUser.Id))
                 .ReturnsAsync(newUser);
-            var userService = new UserService(_userRepositoryMock.Object, _userHierarchyRepositoryMock.Object);
+            var userService = new UserService(_userRepositoryMock.Object, _userHierarchyRepositoryMock.Object,_roleRepository.Object);
 
             // Act
             await userService.CreateUserAsync(loginDto);
@@ -117,7 +119,7 @@ namespace UserTests
         {
             // Arrange
             var userId = 1;
-            var userService = new UserService(_userRepositoryMock.Object, _userHierarchyRepositoryMock.Object);
+            var userService = new UserService(_userRepositoryMock.Object, _userHierarchyRepositoryMock.Object,_roleRepository.Object);
 
             // Act
             await userService.DeleteUserAsync(userId);

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -7,10 +8,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using UsersMicroService.Mappers;
 using UsersMicroService.Services;
@@ -33,12 +36,36 @@ namespace UsersMicroService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = Configuration["Jwt:Issuer"],
+                    ValidAudience = Configuration["Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"])),
+                    ClockSkew = TimeSpan.FromMinutes(1)
+                };
+            });
+
             services.AddDbContext<UserTicketSystemContext>();
             // register automapper
             services.AddAutoMapper(typeof(CustomMapper));
             // Register IUserRepository and IUserHierarchyRepository with their implementations
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserHierarchyRepository, UserHierarchyRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
 
             // Register UserService as a scoped dependency
             services.AddScoped<IUserService, UserService>();
@@ -47,8 +74,39 @@ namespace UsersMicroService
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Users API", Version = "v1" });
-            });
+                // Define the security scheme
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer"
+                });
+
+                // Add a security requirement to apply the "Bearer" scheme to all operations
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[] {}
+                    }
+                });
+             });
             services.AddSwaggerGenNewtonsoftSupport();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminOrLeadManager", policy =>
+                {
+                    policy.RequireRole("Admin", "Lead", "Manager", "Lead/Manager");
+                });
+            });
 
 
             services.AddControllers();
@@ -66,7 +124,7 @@ namespace UsersMicroService
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -78,6 +136,18 @@ namespace UsersMicroService
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Users API V1");
+            });
+
+            app.Use(async (context, next) =>
+            {
+                try
+                {
+                    await next();
+                }
+                catch (Exception ex)
+                {
+                    // Log the error
+                }
             });
         }
     }

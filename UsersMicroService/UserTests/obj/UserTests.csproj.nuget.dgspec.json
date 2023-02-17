@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\admin\\source\\repos\\UsersMicroService\\UserTests\\UserTests.csproj": {}
+    "C:\\Users\\admin\\Documents\\GitHub\\UserTicketsApp\\UsersMicroService\\UserTests\\UserTests.csproj": {}
   },
   "projects": {
-    "C:\\Users\\admin\\source\\repos\\UsersMicroService\\UsersMicroService\\UsersMicroService.csproj": {
+    "C:\\Users\\admin\\Documents\\GitHub\\UserTicketsApp\\UsersMicroService\\UsersMicroService\\UsersMicroService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\admin\\source\\repos\\UsersMicroService\\UsersMicroService\\UsersMicroService.csproj",
+        "projectUniqueName": "C:\\Users\\admin\\Documents\\GitHub\\UserTicketsApp\\UsersMicroService\\UsersMicroService\\UsersMicroService.csproj",
         "projectName": "UsersMicroService",
-        "projectPath": "C:\\Users\\admin\\source\\repos\\UsersMicroService\\UsersMicroService\\UsersMicroService.csproj",
+        "projectPath": "C:\\Users\\admin\\Documents\\GitHub\\UserTicketsApp\\UsersMicroService\\UsersMicroService\\UsersMicroService.csproj",
         "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\admin\\source\\repos\\UsersMicroService\\UsersMicroService\\obj\\",
+        "outputPath": "C:\\Users\\admin\\Documents\\GitHub\\UserTicketsApp\\UsersMicroService\\UsersMicroService\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -53,6 +53,10 @@
             "AutoMapper.Extensions.Microsoft.DependencyInjection": {
               "target": "Package",
               "version": "[12.0.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[3.1.32, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
@@ -111,14 +115,14 @@
         }
       }
     },
-    "C:\\Users\\admin\\source\\repos\\UsersMicroService\\UserTests\\UserTests.csproj": {
+    "C:\\Users\\admin\\Documents\\GitHub\\UserTicketsApp\\UsersMicroService\\UserTests\\UserTests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\admin\\source\\repos\\UsersMicroService\\UserTests\\UserTests.csproj",
+        "projectUniqueName": "C:\\Users\\admin\\Documents\\GitHub\\UserTicketsApp\\UsersMicroService\\UserTests\\UserTests.csproj",
         "projectName": "UserTests",
-        "projectPath": "C:\\Users\\admin\\source\\repos\\UsersMicroService\\UserTests\\UserTests.csproj",
+        "projectPath": "C:\\Users\\admin\\Documents\\GitHub\\UserTicketsApp\\UsersMicroService\\UserTests\\UserTests.csproj",
         "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\admin\\source\\repos\\UsersMicroService\\UserTests\\obj\\",
+        "outputPath": "C:\\Users\\admin\\Documents\\GitHub\\UserTicketsApp\\UsersMicroService\\UserTests\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -141,8 +145,8 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Users\\admin\\source\\repos\\UsersMicroService\\UsersMicroService\\UsersMicroService.csproj": {
-                "projectPath": "C:\\Users\\admin\\source\\repos\\UsersMicroService\\UsersMicroService\\UsersMicroService.csproj"
+              "C:\\Users\\admin\\Documents\\GitHub\\UserTicketsApp\\UsersMicroService\\UsersMicroService\\UsersMicroService.csproj": {
+                "projectPath": "C:\\Users\\admin\\Documents\\GitHub\\UserTicketsApp\\UsersMicroService\\UsersMicroService\\UsersMicroService.csproj"
               }
             }
           }
