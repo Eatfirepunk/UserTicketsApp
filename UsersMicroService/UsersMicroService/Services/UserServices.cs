@@ -123,6 +123,7 @@ namespace UsersMicroService.Services
                 claims.Add(claim);
             }
             claims.Add(new Claim(ClaimTypes.Name, loginValid.Username));
+            claims.Add(new Claim(ClaimTypes.Email, loginValid.Email));
             // Generate a JWT token
             var tokenHandler = new JwtSecurityTokenHandler();
 
@@ -132,7 +133,7 @@ namespace UsersMicroService.Services
                 Issuer = _configuration["Jwt:Issuer"],
                 Audience = _configuration["Jwt:Audience"],
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.AddMinutes(7),
+                Expires = DateTime.UtcNow.AddMinutes(10),
                 SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature)
             };
             
@@ -162,6 +163,24 @@ namespace UsersMicroService.Services
             {
                 throw new Exception($"An error occurred while updating the user {userDto.Id}", ex);
             }
+        }
+
+        public async Task<List<DropdownDto>> GetUsersForDropDown()
+        {
+           var userList =  await _userRepository.GetUsersAsync();
+
+            List<DropdownDto> userDropdown = new List<DropdownDto>();
+
+            foreach(var user in userList) 
+            {
+                if(!user.Roles.Any(x => x.Id == 2)) 
+                {
+                    userDropdown.Add(new DropdownDto { Id = user.Id, Name = user.Username });
+                }
+             
+            }
+
+            return userDropdown;
         }
     }
 }

@@ -18,6 +18,7 @@ namespace UserTicketSystemCore.Interfaces
         Task<UserDto> LoginAsync(LoginDto loginDto);
 
         Task<UserDto> GetUserByEmailAsync(string email);
+
     }
 
 }

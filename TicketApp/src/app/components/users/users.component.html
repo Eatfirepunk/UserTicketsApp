@@ -1,0 +1,46 @@
+<div class="container">
+    <h2>Users</h2>
+    <div class="d-flex justify-content-end">
+        <button class="btn btn-primary mb-3" (click)="showDialog = true">Add New User</button>
+    </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Roles</th>
+          <th>Reports To</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{user.id}}</td>
+          <td>{{user.username}}</td>
+          <td>{{user.email}}</td>
+          <td>
+            <ul>
+              <li *ngFor="let role of user.roles">{{role.name}}</li>
+            </ul>
+          </td>
+          <td>{{user.reportsToUsername}}</td>
+          <td>
+            <button class="btn btn-primary mr-3" (click)="saveUser(user)">Edit</button>
+            <button class="btn btn-danger" (click)="deleteUser(user)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+
+  <p-dialog header="{{ action }} User" [(visible)]="showDialog" [modal]="true" [style]="{'width': '600px', 'height': '700px'}">
+    <app-create-or-edit-user
+      [user]="editingUser"
+      (onSave)="saveUser($event)"
+      (onCancel)="cancelEdit()">
+    </app-create-or-edit-user>
+  </p-dialog>
+  

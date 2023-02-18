@@ -1,0 +1,31 @@
+<div class="container">
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" class="form-control" formControlName="username" id="username">
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" class="form-control" formControlName="email" id="email">
+      </div>
+      <br>
+      <div class="form-group row">
+        <label for="reportsToId">Reports To:</label>
+           <select class="form-control" formControlName="reportsToId" id="reportsToId">
+            <option *ngFor="let usr of allUsers" [value]="usr.id">{{ usr.name }}</option>
+          </select> 
+          <!-- <p-multiSelect [options]="allUsers" class="form-control" id="reportingUserId" [style]="{'width': '100%'}" formControlName="reportingUserId"></p-multiSelect> -->
+
+
+      </div>
+      <br>
+      <div class="form-group row justify-content-end">
+        <div class="d-flex justify-content-end">
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  
+  

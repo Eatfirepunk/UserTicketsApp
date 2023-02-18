@@ -29,7 +29,7 @@ namespace UserTicketSystemData.Repositories
             try
             {
                 var users = await _context.Users.Include(u => u.UserRoles).ThenInclude(ur => ur.Role)
-                    .Include(userReportsTo => userReportsTo.ReportedUsers)
+                    .Include(userReportsTo => userReportsTo.ReportedUsers).Include(usr => usr.ReportingUsers)
                     .ToListAsync();
                 var mappedUsers = _mapper.Map<IEnumerable<UserDto>>(users);
 
@@ -41,6 +41,7 @@ namespace UserTicketSystemData.Repositories
                     if (uId != null) 
                     {
                         u.ReportsToId = uId.UserId;
+                        u.ReportsToUsername = uId.User.Username;
                     }              
                     index++;
                 }
@@ -59,13 +60,14 @@ namespace UserTicketSystemData.Repositories
             try
             {
                 var user = await _context.Users.Include(u => u.UserRoles).ThenInclude(ur => ur.Role)
-                                    .Include(userReportsTo => userReportsTo.ReportedUsers)
+                                    .Include(userReportsTo => userReportsTo.ReportedUsers).Include(usr => usr.ReportingUsers)
                                     .FirstOrDefaultAsync(u => u.Id == id);
                 if (user == null) { return null; }
                 var mappedUser = _mapper.Map<UserDto>(user);
                 // get the first user it reports to, this logic can be expanded when the user can report to one or more users, at this time just can report to one
                 var uId = user.ReportedUsers?.FirstOrDefault();
                 mappedUser.ReportsToId = uId != null ? uId.UserId : (int?)null;
+                mappedUser.ReportsToUsername = uId?.User?.Username;
                 return mappedUser;
             }
             catch (Exception ex)

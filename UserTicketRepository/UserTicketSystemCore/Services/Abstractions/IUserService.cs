@@ -14,5 +14,6 @@ namespace UserTicketSystemCore.Services.Abstractions
         Task UpdateUserAsync(UserDto userDto);
         Task DeleteUserAsync(int userId);
         Task<string> LoginAsync(LoginDto loginDto);
+        Task<List<DropdownDto>> GetUsersForDropDown();
     }
 }

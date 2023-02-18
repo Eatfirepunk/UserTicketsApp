@@ -10,7 +10,8 @@ namespace UserTicketSystemCore.Models.Dtos
         public string Email { get; set; }
         public string Username { get; set; }
         public ICollection<RoleDto> Roles { get; set; }
-        public int? ReportsToId { get; set; } 
+        public int? ReportsToId { get; set; }
+        public string ReportsToUsername { get; set; }
     }
 
 }

@@ -37,6 +37,17 @@ namespace UsersMicroService
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowLocalhost",
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:4200")
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                    });
+            });
+
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -120,7 +131,7 @@ namespace UsersMicroService
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseCors("AllowLocalhost");
             app.UseHttpsRedirection();
 
             app.UseRouting();

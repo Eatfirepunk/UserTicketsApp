@@ -1,0 +1,54 @@
+.form {
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    width: 600px;
+    height: 600px;
+  }
+  .form-group {
+    margin-bottom: 15px;
+  }
+  .label {
+    font-weight: bold;
+  }
+
+  /* Style the label */
+.ui-multiselect-label {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Style the container */
+  .ui-multiselect {
+    width: 100%;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    padding: 0.5rem;
+    font-size: 1rem;
+  }
+  
+  /* Style the selected items */
+  .ui-multiselect-token {
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 0.25rem;
+    margin: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.9rem;
+  }
+  
+  /* Style the dropdown items */
+  .ui-multiselect-panel .ui-multiselect-item {
+    font-size: 0.9rem;
+    padding: 0.25rem 0.5rem;
+  }
+  
+  /* Style the dropdown items on hover */
+  .ui-multiselect-panel .ui-multiselect-item:hover {
+    background-color: #007bff;
+    color: #fff;
+  }
+  

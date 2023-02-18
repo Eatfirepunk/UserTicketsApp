@@ -35,7 +35,7 @@ namespace UsersMicroService.Controllers
 
 
         [AllowAnonymous]
-        [HttpPost("login")]
+        [HttpPost("Login")]
         public IActionResult Login([FromBody]LoginDto loginModel)
         {
 
@@ -63,6 +63,14 @@ namespace UsersMicroService.Controllers
             }
             return Ok(user);
         }
+
+        [HttpGet("Catalog")]
+        public async Task<IActionResult> GetAllUsersForDropdown()
+        {
+            var users = await _userService.GetUsersForDropDown();
+            return Ok(users);
+        }
+
 
         [HttpPost]
         [Authorize(Policy = "AdminOrLeadManager")]
