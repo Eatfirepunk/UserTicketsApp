@@ -22,7 +22,10 @@ export class LoginComponent implements OnInit {
     private router: Router
   ) { 
 
-
+    if(authService.isLoggedIn())
+    {
+      this.router.navigate(['/']);
+    }
   }
 
   ngOnInit(): void {

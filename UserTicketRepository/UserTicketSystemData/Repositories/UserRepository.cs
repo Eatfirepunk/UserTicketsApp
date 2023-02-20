@@ -159,17 +159,23 @@ namespace UserTicketSystemData.Repositories
 
         public async Task<UserDto> GetUserByEmailAsync(string email)
         {
-            var user = await _context.Users.Include(u => u.UserRoles).FirstOrDefaultAsync(u => u.Email == email);
-            if (user == null)
+            try
             {
-                return null;
+                var user = await _context.Users.Include(u => u.UserRoles).ThenInclude(ur => ur.Role)
+                                    .Include(userReportsTo => userReportsTo.ReportedUsers).Include(usr => usr.ReportingUsers)
+                                    .FirstOrDefaultAsync(u => u.Email == email);
+                if (user == null) { return null; }
+                var mappedUser = _mapper.Map<UserDto>(user);
+                // get the first user it reports to, this logic can be expanded when the user can report to one or more users, at this time just can report to one
+                var uId = user.ReportedUsers?.FirstOrDefault();
+                mappedUser.ReportsToId = uId != null ? uId.UserId : (int?)null;
+                mappedUser.ReportsToUsername = uId?.User?.Username;
+                return mappedUser;
             }
-
-            UserDto userDto = null;
-            // Map dto with the result of the search
-            _mapper.Map(user, userDto);
-
-            return userDto;
+            catch (Exception ex)
+            {
+                throw new Exception($"An error occurred while getting user with email {email} from the database", ex);
+            }
         }
     }
 

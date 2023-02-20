@@ -64,6 +64,18 @@ namespace UsersMicroService.Controllers
             return Ok(user);
         }
 
+
+        [HttpGet("email/{email}")]
+        public async Task<IActionResult> GetUserByEmail(string email)
+        {
+            var user = await _userService.GetUserByEmailAsync(email);
+            if (user == null)
+            {
+                return NotFound("User do not exists");
+            }
+            return Ok(user);
+        }
+
         [HttpGet("Catalog")]
         public async Task<IActionResult> GetAllUsersForDropdown()
         {

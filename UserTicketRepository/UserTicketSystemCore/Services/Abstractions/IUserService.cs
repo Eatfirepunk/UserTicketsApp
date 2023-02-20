@@ -9,6 +9,7 @@ namespace UserTicketSystemCore.Services.Abstractions
    public interface IUserService
     {
         Task<UserDto> GetUserByIdAsync(int id);
+        Task<UserDto> GetUserByEmailAsync(string mail);
         Task<IEnumerable<UserDto>> GetUsersAsync();
         Task<UserDto> CreateUserAsync(LoginDto loginDto);
         Task UpdateUserAsync(UserDto userDto);

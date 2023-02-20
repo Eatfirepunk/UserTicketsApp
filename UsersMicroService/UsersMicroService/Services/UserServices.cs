@@ -182,5 +182,10 @@ namespace UsersMicroService.Services
 
             return userDropdown;
         }
+
+        public async Task<UserDto> GetUserByEmailAsync(string mail)
+        {
+            return await _userRepository.GetUserByEmailAsync(mail);
+        }
     }
 }
