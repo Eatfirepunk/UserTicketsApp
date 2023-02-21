@@ -18,7 +18,7 @@ namespace UserTicketSystemCore.Interfaces
         Task<UserDto> LoginAsync(LoginDto loginDto);
 
         Task<UserDto> GetUserByEmailAsync(string email);
-
+        Task<IEnumerable<UserDto>> GetAllManagerSubortinates(int managerId);
     }
 
 }

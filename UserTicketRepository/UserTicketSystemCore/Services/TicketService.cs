@@ -48,5 +48,10 @@ namespace UserTicketSystemCore.Services
         {
             await _ticketRepository.DeleteTicketAsync(id);
         }
+
+        public async Task<IEnumerable<TicketDto>> GetAllTicketsUnderLeadManagerAsync(TicketLookUpParameters filters, int userId)
+        {
+            return await _ticketRepository.GetAllTicketsUnderManagerAsync(filters, userId);
+        }
     }
 }

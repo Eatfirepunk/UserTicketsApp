@@ -13,5 +13,8 @@ namespace UserTicketSystemCore.Models.LookUpModels
 
         public string TicketTitle { get; set; }
         public string Description { get; set; }
+
+        public int? CreatedBy { get; set; }
+        public int? UpdatedBy { get; set; }
     }
 }

@@ -15,5 +15,7 @@ namespace UserTicketSystemCore.Interfaces
         Task<TicketDto> CreateTicketAsync(TicketDto ticketDto);
         Task UpdateTicketAsync(TicketDto ticketDto);
         Task DeleteTicketAsync(Guid id);
+
+        Task<IEnumerable<TicketDto>> GetAllTicketsUnderManagerAsync(TicketLookUpParameters filters, int managerId);
     }
 }

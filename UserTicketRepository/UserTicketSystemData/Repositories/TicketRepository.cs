@@ -16,46 +16,45 @@ namespace UserTicketSystemData.Repositories
     {
         private readonly UserTicketSystemContext _context;
         private readonly IMapper _mapper;
-
-        public TicketRepository(UserTicketSystemContext context, IMapper mapper)
+        private IUserRepository _userRepository;
+        public TicketRepository(UserTicketSystemContext context, IMapper mapper,IUserRepository userRepository)
         {
             _context = context;
             _mapper = mapper;
+            _userRepository = userRepository;
         }
 
         public async Task<IEnumerable<TicketDto>> GetAllTicketsAsync(TicketLookUpParameters filters)
         {
             var ticketsQuery = _context.Tickets.AsQueryable();
-            BuildTicketFilters(filters, ticketsQuery);
-            var tickets = await ticketsQuery
-                .Include(t => t.TicketType)
-                .Include(t => t.TicketStatus)
-                .Include(t => t.CreatedByUser)
-                .Include(t => t.UpdatedByUser)
-                .ToListAsync();
+            
+            var tickets = await BuildTicketFilters(filters, ticketsQuery);
 
             return _mapper.Map<IEnumerable<TicketDto>>(tickets);
         }
-
 
         // separated method in case retrieving only one user tickets has additional logic
         public async Task<IEnumerable<TicketDto>> GetAllTicketsForUserAsync(TicketLookUpParameters filters, int userId)
         {
-            var ticketsQuery = _context.Tickets.Where(x=> x.Id == userId);
-
-            BuildTicketFilters(filters,ticketsQuery);
-
-            var tickets = await ticketsQuery
-                .Include(t => t.TicketType)
-                .Include(t => t.TicketStatus)
-                .Include(t => t.CreatedByUser)
-                .Include(t => t.UpdatedByUser)
-                .ToListAsync();
+            var ticketsQuery = _context.Tickets.Where(x=> x.AssignedToId == userId);
+            var tickets = await BuildTicketFilters(filters, ticketsQuery);
 
             return _mapper.Map<IEnumerable<TicketDto>>(tickets);
         }
 
-        private void BuildTicketFilters(TicketLookUpParameters filters, IQueryable<Ticket> ticketsQuery) 
+
+        public async Task<IEnumerable<TicketDto>> GetAllTicketsUnderManagerAsync(TicketLookUpParameters filters, int managerId)
+        {
+            var usersUnderManager = await _userRepository.GetAllManagerSubortinates(managerId);
+            var userIds = usersUnderManager.Select(x => x.Id).Distinct().ToList();
+            var ticketsQuery = _context.Tickets.Where(x => (x.AssignedToId.HasValue && userIds.Contains(x.AssignedToId.Value)) || x.AssignedToId == managerId);
+
+            var tickets = await BuildTicketFilters(filters, ticketsQuery);
+
+            return _mapper.Map<IEnumerable<TicketDto>>(tickets);
+        }
+
+        private async Task<IEnumerable<Ticket>> BuildTicketFilters(TicketLookUpParameters filters, IQueryable<Ticket> ticketsQuery) 
         {
             if (filters.FromDate.HasValue)
             {
@@ -81,6 +80,26 @@ namespace UserTicketSystemData.Repositories
             {
                 ticketsQuery = ticketsQuery.Where(t => t.Description.Contains(filters.Description));
             }
+
+            if (filters.UpdatedBy.HasValue)
+            {
+                ticketsQuery = ticketsQuery.Where(t => t.UpdatedBy == filters.UpdatedBy.Value);
+            }
+
+            if (filters.CreatedBy.HasValue)
+            {
+                ticketsQuery = ticketsQuery.Where(t => t.CreatedBy == filters.CreatedBy.Value);
+            }
+
+            var tickets = await ticketsQuery
+                .Include(t => t.TicketType)
+                .Include(t => t.TicketStatus)
+                .Include(t => t.CreatedByUser)
+                .Include(t => t.UpdatedByUser)
+                .Include(t => t.AssignedToUser)
+                .ToListAsync();
+
+            return tickets;
         }
 
         public async Task<TicketDto> GetTicketByIdAsync(Guid id)
@@ -90,6 +109,7 @@ namespace UserTicketSystemData.Repositories
                 .Include(t => t.TicketStatus)
                 .Include(t => t.CreatedByUser)
                 .Include(t => t.UpdatedByUser)
+                .Include(t => t.AssignedToUser)
                 .FirstOrDefaultAsync(t => t.TicketId == id);
 
             if (ticket == null)

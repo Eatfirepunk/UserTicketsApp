@@ -17,5 +17,6 @@ namespace UserTicketSystemCore.Models.Dtos
         public string Status { get; set; }
         public UserDto CreatedBy { get; set; }
         public UserDto UpdatedBy { get; set; }
+        public UserDto AssignedTo { get; set; }
     }
 }

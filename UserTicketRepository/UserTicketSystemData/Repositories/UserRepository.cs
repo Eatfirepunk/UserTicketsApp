@@ -17,11 +17,13 @@ namespace UserTicketSystemData.Repositories
     {
         private readonly UserTicketSystemContext _context;
         private readonly IMapper _mapper;
+        private readonly IUserHierarchyRepository _userHierarchyRepository;
 
-        public UserRepository(UserTicketSystemContext context, IMapper mapper)
+        public UserRepository(UserTicketSystemContext context, IMapper mapper, IUserHierarchyRepository userHierarchyRepository)
         {
             _context = context;
             _mapper = mapper;
+            _userHierarchyRepository = userHierarchyRepository;
         }
 
         public async Task<IEnumerable<UserDto>> GetUsersAsync()
@@ -176,6 +178,32 @@ namespace UserTicketSystemData.Repositories
             {
                 throw new Exception($"An error occurred while getting user with email {email} from the database", ex);
             }
+        }
+
+        public async Task<IEnumerable<UserDto>> GetAllManagerSubortinates(int managerId)
+        {
+            var subordinatesIds = await _userHierarchyRepository.GetUserHierarchyByUserIdAsync(managerId);
+            var users = await _context.Users.Include(u => u.UserRoles).ThenInclude(ur => ur.Role)
+                .Include(userReportsTo => userReportsTo.ReportedUsers).Include(usr => usr.ReportingUsers)
+                .Where(x => subordinatesIds.Any(s => s.ReportingUserId == x.Id))
+                .ToListAsync();
+            var mappedUsers = _mapper.Map<IEnumerable<UserDto>>(users);
+
+            int index = 0;
+            foreach (var u in mappedUsers)
+            {
+                // get the first user it reports to, this logic can be expanded when the user can report to one or more users, at this time just can report to one
+                var uId = users[index].ReportedUsers?.FirstOrDefault();
+                if (uId != null)
+                {
+                    u.ReportsToId = uId.UserId;
+                    u.ReportsToUsername = uId.User.Username;
+                }
+                index++;
+            }
+
+            return mappedUsers;
+
         }
     }
 

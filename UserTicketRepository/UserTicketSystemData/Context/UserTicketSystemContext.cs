@@ -68,6 +68,11 @@ namespace UserTicketSystemData
                 .WithMany(u => u.UpdatedTickets)
                 .HasForeignKey(t => t.UpdatedBy);
 
+            modelBuilder.Entity<Ticket>()
+                .HasOne(t => t.AssignedToUser)
+                .WithMany(u => u.AssignedTickets)
+                .HasForeignKey(t => t.AssignedToId);
+
             modelBuilder.Entity<Role>()
                 .HasIndex(r => r.Name)
                 .IsUnique();

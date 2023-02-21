@@ -15,6 +15,9 @@ namespace UserTicketSystemCore.Models
         public DateTime CreatedDatetime { get; set; }
         public int StatusId { get; set; }
         public TicketStatus TicketStatus { get; set; }
+
+        public int? AssignedToId{ get; set; }
+        public User AssignedToUser { get; set; }
         public int CreatedBy { get; set; }
         public User CreatedByUser { get; set; }
         public int? UpdatedBy { get; set; }
