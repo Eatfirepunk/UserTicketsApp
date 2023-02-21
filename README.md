@@ -11,6 +11,7 @@ I will also ensure that my Angular application follows SOLID principles by creat
 
 
 How to run it locally:
+
 1.- Clone the whole repository
 2.- Locate the SQL folder, open it , run the DB Initialization script.sql file in your SQL Server environment
 3.- Change the appsettings DefaultConnection to the db pointing to the newly created db do this for both microservices(Tickets microservice is still not implemented)
@@ -19,8 +20,10 @@ How to run it locally:
 6.- To run the angular app run the following command: ng serve
 7.- Run the user microservice on the debug platform select IIS Express
 8.- To test the users microservice you will first have to login if you inserted the credentials in the script the login should be:
+
 password:holaMundo
 email:john.doe@example.com
+
 (please not that in the event of the credentials not working, please feel free to add the AllowAnonymus decorator in to the     
  public async Task<IActionResult> CreateUser(LoginDto userDto) method , to create and admin user and use it to login and get the token to use the other endpoints)
 9.- For step 8 use api/Login endpoint to login this will return the token for the request to this endpoint, use the credentials above or follow the before mentioned instructions.
