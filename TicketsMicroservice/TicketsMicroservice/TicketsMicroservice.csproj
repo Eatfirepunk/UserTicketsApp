@@ -10,5 +10,14 @@
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.11.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="UserTicketSystemCore">
+      <HintPath>RepositoryLibraries\UserTicketSystemCore.dll</HintPath>
+    </Reference>
+    <Reference Include="UserTicketSystemData">
+      <HintPath>RepositoryLibraries\UserTicketSystemData.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 
 </Project>
