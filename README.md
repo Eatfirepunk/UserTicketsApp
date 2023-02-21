@@ -3,11 +3,11 @@ Angular App to modify users and create incident tickets
 
 Design:
 This app tries to be a demostration on how follow SOLID principles and ensure modularity.
- The goal is to create two microservices, one for handling tickets and the other one for users. Each microservice will handle its respective domain.
+ The goal is to create two microservices, one for handling tickets (TicketsMicroservice) and the other one for users (UsersMicroservice). Each microservice will handle its respective domain.
 
-I will use the repository pattern to extract data from the database. This will allow me to abstract away the details of the database implementation from the business logic of the microservices. By doing so, I can ensure that my microservices are not tightly coupled to the database implementation, and can be easily swapped out if needed.
+I will use the repository pattern to extract data from the database. This will allow me to abstract away the details of the database implementation from the business logic of the microservices (UserTicketSystemData). By doing so, I can ensure that my microservices are not tightly coupled to the database implementation, and can be easily swapped out if needed.
 
-I will also ensure that my Angular application follows SOLID principles by creating separate components for each feature and ensuring that each component is responsible for a single responsibility. I will also create separate services for each microservice to ensure that the Angular application is not tightly coupled to the microservices. This will ensure that I can easily change the implementation of the microservices without affecting the Angular application.
+I will also ensure that my Angular application (TicketsApp) follows SOLID principles by creating separate components for each feature and ensuring that each component is responsible for a single responsibility. I will also create separate services for each microservice to ensure that the Angular application is not tightly coupled to the microservices. This will ensure that I can easily change the implementation of the microservices without affecting the Angular application.
 
 
 How to run it locally:
