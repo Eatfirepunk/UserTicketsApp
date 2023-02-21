@@ -26,6 +26,10 @@ namespace UserTicketSystemData.Repositories
             _userHierarchyRepository = userHierarchyRepository;
         }
 
+        /// <summary>
+        /// Retrieves a list of all users from the database, including their roles and reporting relationships.
+        /// </summary>
+        /// <returns>Returns an enumerable collection of UserDto objects</returns>
         public async Task<IEnumerable<UserDto>> GetUsersAsync()
         {
             try
@@ -57,6 +61,11 @@ namespace UserTicketSystemData.Repositories
             }
         }
 
+        /// <summary>
+        /// Retrieves a single user by their ID from the database, including their roles and reporting relationships
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Returns a UserDto object, or null if the user does not exist.</returns>
         public async Task<UserDto> GetUserByIdAsync(int id)
         {
             try
@@ -78,6 +87,11 @@ namespace UserTicketSystemData.Repositories
             }
         }
 
+        /// <summary>
+        /// Creates a new user in the database based on a LoginDto object, which contains the user's email, password, and roles.
+        /// </summary>
+        /// <param name="userDto"></param>
+        /// <returns> Returns a UserDto object representing the newly created user</returns>
         public async Task<UserDto> CreateUserAsync(LoginDto userDto)
         {
             try
@@ -95,6 +109,12 @@ namespace UserTicketSystemData.Repositories
             }
         }
 
+        /// <summary>
+        /// Updates an existing user in the database based on a UserDto object, including updating the user's roles. 
+        /// </summary>
+        /// <param name="userDto"></param>
+        /// <exception cref="ArgumentException">Throws an ArgumentException if the user cannot be found.</exception>
+        /// <returns></returns>
         public async Task UpdateUserAsync(UserDto userDto)
         {
             try
@@ -127,7 +147,12 @@ namespace UserTicketSystemData.Repositories
                 throw new Exception($"An error occurred while updating user with id {userDto.Id} in the database", ex);
             }
         }
-
+        /// <summary>
+        /// Deletes an existing user from the database by their ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <exception cref="ArgumentException">Throws an ArgumentException if the user cannot be found.</exception>
+        /// <returns></returns>
         public async Task DeleteUserAsync(int id)
         {
             try
@@ -146,6 +171,11 @@ namespace UserTicketSystemData.Repositories
             }
         }
 
+        /// <summary>
+        /// Authenticates a user based on their email and password by verifying the hashed password stored in the database.
+        /// </summary>
+        /// <param name="loginDto"></param>
+        /// <returns>Returns a UserDto object representing the authenticated user, or null if authentication fails</returns>
         public async Task<UserDto> LoginAsync(LoginDto loginDto)
         {
             var user = await _context.Users.Include(u => u.UserRoles).ThenInclude(ur => ur.Role).FirstOrDefaultAsync(u => u.Email == loginDto.Email);
@@ -159,6 +189,11 @@ namespace UserTicketSystemData.Repositories
             return _mapper.Map<UserDto>(user);
         }
 
+        /// <summary>
+        /// Retrieves a single user by their email address from the database, including their roles and reporting relationships
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns>Returns a UserDto object, or null if the user does not exist.</returns>
         public async Task<UserDto> GetUserByEmailAsync(string email)
         {
             try
@@ -180,6 +215,11 @@ namespace UserTicketSystemData.Repositories
             }
         }
 
+        /// <summary>
+        /// Retrieves a list of all users who report to the specified manager, including their roles and reporting relationships. 
+        /// </summary>
+        /// <param name="managerId"></param>
+        /// <returns>Returns an enumerable collection of UserDto objects</returns>
         public async Task<IEnumerable<UserDto>> GetAllManagerSubortinates(int managerId)
         {
             var subordinatesIds = await _userHierarchyRepository.GetUserHierarchyByUserIdAsync(managerId);

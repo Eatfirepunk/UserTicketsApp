@@ -24,6 +24,11 @@ namespace UserTicketSystemData.Repositories
             _userRepository = userRepository;
         }
 
+        /// <summary>
+        /// Returns all the tickets stored in the database according to the filters given as input, and maps them to TicketDto objects.
+        /// </summary>
+        /// <param name="filters"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<TicketDto>> GetAllTicketsAsync(TicketLookUpParameters filters)
         {
             var ticketsQuery = _context.Tickets.AsQueryable();
@@ -34,6 +39,12 @@ namespace UserTicketSystemData.Repositories
         }
 
         // separated method in case retrieving only one user tickets has additional logic
+        /// <summary>
+        /// Returns all tickets assigned to a specific user, and maps them to TicketDto objects.
+        /// </summary>
+        /// <param name="filters"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<TicketDto>> GetAllTicketsForUserAsync(TicketLookUpParameters filters, int userId)
         {
             var ticketsQuery = _context.Tickets.Where(x=> x.AssignedToId == userId);
@@ -43,6 +54,12 @@ namespace UserTicketSystemData.Repositories
         }
 
 
+        /// <summary>
+        /// Returns all tickets assigned to a manager and their subordinates, according to filters given as input, and maps them to TicketDto objects.
+        /// </summary>
+        /// <param name="filters"></param>
+        /// <param name="managerId"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<TicketDto>> GetAllTicketsUnderManagerAsync(TicketLookUpParameters filters, int managerId)
         {
             var usersUnderManager = await _userRepository.GetAllManagerSubortinates(managerId);
@@ -54,6 +71,12 @@ namespace UserTicketSystemData.Repositories
             return _mapper.Map<IEnumerable<TicketDto>>(tickets);
         }
 
+        /// <summary>
+        /// Private method that applies filtering to a given IQueryable of Ticket objects, according to the filters given as input.
+        /// </summary>
+        /// <param name="filters"></param>
+        /// <param name="ticketsQuery"></param>
+        /// <returns></returns>
         private async Task<IEnumerable<Ticket>> BuildTicketFilters(TicketLookUpParameters filters, IQueryable<Ticket> ticketsQuery) 
         {
             if (filters.FromDate.HasValue)
@@ -102,6 +125,12 @@ namespace UserTicketSystemData.Repositories
             return tickets;
         }
 
+
+        /// <summary>
+        /// Returns a TicketDto object for a specific ticket identified by the id given as input.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<TicketDto> GetTicketByIdAsync(Guid id)
         {
             var ticket = await _context.Tickets
@@ -120,6 +149,12 @@ namespace UserTicketSystemData.Repositories
             return _mapper.Map<TicketDto>(ticket);
         }
 
+
+        /// <summary>
+        /// Creates a new ticket in the database based on a TicketDto object given as input, and returns the new ticket mapped to a TicketDto object.
+        /// </summary>
+        /// <param name="ticketDto"></param>
+        /// <returns></returns>
         public async Task<TicketDto> CreateTicketAsync(TicketDto ticketDto)
         {
             var ticket = _mapper.Map<Ticket>(ticketDto);
@@ -131,6 +166,11 @@ namespace UserTicketSystemData.Repositories
             return _mapper.Map<TicketDto>(ticket);
         }
 
+        /// <summary>
+        /// Updates a ticket in the database based on a TicketDto object given as input, and saves the changes.
+        /// </summary>
+        /// <param name="ticketDto"></param>
+        /// <returns></returns>
         public async Task UpdateTicketAsync(TicketDto ticketDto)
         {
             var ticket = await _context.Tickets
@@ -145,6 +185,12 @@ namespace UserTicketSystemData.Repositories
 
             await _context.SaveChangesAsync();
         }
+
+        /// <summary>
+        /// Deletes a ticket from the database based on the ticket id given as input, and saves the changes.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
 
         public async Task DeleteTicketAsync(Guid id)
         {
