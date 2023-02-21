@@ -38,12 +38,19 @@ email:john.doe@example.com
 9.- For step 8 use api/Login endpoint to login this will return the token for the request to this endpoint, use the credentials above or follow the before mentioned instructions.
  
 10.- To login to the angular app use the credentials described, or create a new user using the before mentioned steps.
+ 
+ 
 
+ 
 
 This is work done by Julio Lozada -- contact me at julio_lozada123@hotmail.com
+ 
 
 Please review the Issues List to check for the remaining work for the whole app.
 
+ 
+ 
+ 
 
 Requirements:
 
