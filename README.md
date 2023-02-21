@@ -43,10 +43,10 @@ email:john.doe@example.com
 
  
 
-This is work done by Julio Lozada -- contact me at julio_lozada123@hotmail.com
+--------------------------This is work done by Julio Lozada -- contact me at julio_lozada123@hotmail.com-----------------------------------------------------
  
 
-Please review the Issues List to check for the remaining work for the whole app.
+-----------------------------Please review the Issues List to check for the remaining work for the whole app.-------------------------------------------------
 
  
  
