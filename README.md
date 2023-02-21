@@ -10,7 +10,30 @@ I will use the repository pattern to extract data from the database. This will a
 I will also ensure that my Angular application follows SOLID principles by creating separate components for each feature and ensuring that each component is responsible for a single responsibility. I will also create separate services for each microservice to ensure that the Angular application is not tightly coupled to the microservices. This will ensure that I can easily change the implementation of the microservices without affecting the Angular application.
 
 
+How to run it locally:
+1.- Clone the whole repository
+2.- Locate the SQL folder, open it , run the DB Initialization script.sql file in your SQL Server environment
+3.- Change the appsettings DefaultConnection to the db pointing to the newly created db do this for both microservices(Tickets microservice is still not implemented)
+4.- In the startup.cs on the usersmicroservice check that the port that runs your angular app maps the one from the CORS policy
+5.- Open the TicketApp folder and run npm install to restore the nuget packages
+6.- To run the angular app run the following command: ng serve
+7.- Run the user microservice on the debug platform select IIS Express
+8.- To test the users microservice you will first have to login if you inserted the credentials in the script the login should be:
+password:holaMundo
+email:john.doe@example.com
+(please not that in the event of the credentials not working, please feel free to add the AllowAnonymus decorator in to the     
+ public async Task<IActionResult> CreateUser(LoginDto userDto) method , to create and admin user and use it to login and get the token to use the other endpoints)
+9.- For step 8 use api/Login endpoint to login this will return the token for the request to this endpoint, use the credentials above or follow the before mentioned instructions.
+10.- To login to the angular app use the credentials described, or create a new user using the before mentioned steps.
+
+
+This is work done by Julio Lozada -- contact me at julio_lozada123@hotmail.com
+
+Please review the Issues List to check for the remaining work for the whole app.
+
+
 Requirements:
+
 Build an Angular Application with following specifications,
 
 1.       Web Application should have following pages that should be redirected according to the Roles (Admin, User)
