@@ -1,3 +1,7 @@
+CREATE DATABASE UserTicketSystem
+
+USE UserTicketSystem
+
 CREATE TABLE Roles (
     Id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
     Name VARCHAR(50) NOT NULL
