@@ -54,7 +54,7 @@ namespace UserTicketSystemCore.Services.Abstractions
         /// </summary>
         /// <param name="loginDto"></param>
         /// <returns>Returns a JWT token</returns>
-        Task<string> LoginAsync(LoginDto loginDto);
+        Task<string> LoginAsync(CredentialsDto loginDto);
         /// <summary>
         /// Method retrieves a list of users for drop-down list
         /// </summary>

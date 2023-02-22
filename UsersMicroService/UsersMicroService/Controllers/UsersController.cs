@@ -36,10 +36,10 @@ namespace UsersMicroService.Controllers
 
         [AllowAnonymous]
         [HttpPost("Login")]
-        public IActionResult Login([FromBody]LoginDto loginModel)
+        public IActionResult Login([FromBody]CredentialsDto credentials)
         {
 
-            var tokenString =  _userService.LoginAsync(loginModel).Result;
+            var tokenString =  _userService.LoginAsync(credentials).Result;
 
             if (tokenString != "Unauthorized")
             {

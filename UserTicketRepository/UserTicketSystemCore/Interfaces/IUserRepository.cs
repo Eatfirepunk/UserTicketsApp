@@ -49,7 +49,7 @@ namespace UserTicketSystemCore.Interfaces
         /// </summary>
         /// <param name="loginDto"></param>
         /// <returns>Returns a UserDto object representing the authenticated user, or null if authentication fails</returns>
-        Task<UserDto> LoginAsync(LoginDto loginDto);
+        Task<UserDto> LoginAsync(CredentialsDto loginDto);
         /// <summary>
         /// Retrieves a single user by their email address from the database, including their roles and reporting relationships
         /// </summary>

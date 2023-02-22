@@ -19,14 +19,16 @@ namespace UsersMicroService.Services
         private readonly IUserHierarchyRepository _userHierarchyRepository;
         private readonly IRoleRepository _roleRepository;
         private readonly IConfiguration _configuration;
+        private readonly JwtSecurityTokenHandler _tokenHandler;
         public UserService(IUserRepository userRepository, 
             IUserHierarchyRepository userHierarchyRepository
-            ,IRoleRepository roleRepository,IConfiguration configuration)
+            ,IRoleRepository roleRepository,IConfiguration configuration,JwtSecurityTokenHandler tokenHandler)
         {
             _userRepository = userRepository;
             _userHierarchyRepository = userHierarchyRepository;
             _roleRepository = roleRepository;
             _configuration = configuration;
+            _tokenHandler = tokenHandler;
         }
         public async Task<UserDto> CreateUserAsync(LoginDto loginDto)
         {
@@ -106,11 +108,11 @@ namespace UsersMicroService.Services
             return await _userRepository.GetUsersAsync();
         }
 
-        public async Task<string> LoginAsync(LoginDto loginDto)
+        public async Task<string> LoginAsync(CredentialsDto credentials)
         {
 
             // Check if the user credentials are valid
-            var loginValid = await _userRepository.LoginAsync(loginDto);
+            var loginValid = await _userRepository.LoginAsync(credentials);
             if (loginValid == null)
             {
                 return "Unauthorized";
@@ -125,7 +127,7 @@ namespace UsersMicroService.Services
             claims.Add(new Claim(ClaimTypes.Name, loginValid.Username));
             claims.Add(new Claim(ClaimTypes.Email, loginValid.Email));
             // Generate a JWT token
-            var tokenHandler = new JwtSecurityTokenHandler();
+
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var tokenDescriptor = new SecurityTokenDescriptor
@@ -137,9 +139,9 @@ namespace UsersMicroService.Services
                 SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature)
             };
             
-            var token = tokenHandler.CreateToken(tokenDescriptor);
+            var token = _tokenHandler.CreateToken(tokenDescriptor);
 
-            var tokenString = tokenHandler.WriteToken(token);
+            var tokenString = _tokenHandler.WriteToken(token);
 
             return tokenString;
         }
