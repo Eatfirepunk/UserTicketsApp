@@ -176,7 +176,7 @@ namespace UserTicketSystemData.Repositories
         /// </summary>
         /// <param name="loginDto"></param>
         /// <returns>Returns a UserDto object representing the authenticated user, or null if authentication fails</returns>
-        public async Task<UserDto> LoginAsync(LoginDto loginDto)
+        public async Task<UserDto> LoginAsync(CredentialsDto loginDto)
         {
             var user = await _context.Users.Include(u => u.UserRoles).ThenInclude(ur => ur.Role).FirstOrDefaultAsync(u => u.Email == loginDto.Email);
 

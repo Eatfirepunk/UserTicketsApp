@@ -12,6 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -78,6 +79,8 @@ namespace UsersMicroService
             services.AddScoped<IUserHierarchyRepository, UserHierarchyRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
 
+            //Add JwtToken handler to be injected
+            services.AddSingleton<JwtSecurityTokenHandler>();
             // Register UserService as a scoped dependency
             services.AddScoped<IUserService, UserService>();
 

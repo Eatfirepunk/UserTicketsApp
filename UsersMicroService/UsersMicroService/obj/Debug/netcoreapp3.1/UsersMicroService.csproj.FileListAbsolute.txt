@@ -150,4 +150,3 @@ C:\Users\admin\Documents\GitHub\UserTicketsApp\UsersMicroService\UsersMicroServi
 C:\Users\admin\Documents\GitHub\UserTicketsApp\UsersMicroService\UsersMicroService\obj\Debug\netcoreapp3.1\UsersMicroService.dll
 C:\Users\admin\Documents\GitHub\UserTicketsApp\UsersMicroService\UsersMicroService\obj\Debug\netcoreapp3.1\UsersMicroService.pdb
 C:\Users\admin\Documents\GitHub\UserTicketsApp\UsersMicroService\UsersMicroService\obj\Debug\netcoreapp3.1\UsersMicroService.genruntimeconfig.cache
-C:\Users\admin\Documents\GitHub\UserTicketsApp\UsersMicroService\UsersMicroService\obj\Debug\netcoreapp3.1\UsersMicroService.csproj.AssemblyReference.cache
