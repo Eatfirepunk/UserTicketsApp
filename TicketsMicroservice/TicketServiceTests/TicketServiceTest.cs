@@ -1,28 +1,27 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using TicketsMicroservice.Services;
 using UserTicketSystemCore.Interfaces;
 using UserTicketSystemCore.Models.Dtos;
 using UserTicketSystemCore.Models.LookUpModels;
-using UserTicketSystemCore.Services;
 
-namespace RepositoryTests
+namespace TicketServiceTests
 {
     [TestClass]
     public class TicketServiceTests
     {
         private Mock<ITicketRepository> _ticketRepositoryMock;
-        private TicketService _ticketService;
+        private TicketsService _ticketService;
 
         [TestInitialize]
         public void Initialize()
         {
             _ticketRepositoryMock = new Mock<ITicketRepository>();
-            _ticketService = new TicketService(_ticketRepositoryMock.Object);
+            _ticketService = new TicketsService(_ticketRepositoryMock.Object);
         }
 
         [TestMethod]
