@@ -8585,26 +8585,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\admin\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\Alguien\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\admin\\Documents\\GitHub\\UserTicketsApp\\UsersMicroService\\UserTests\\UserTests.csproj",
+      "projectUniqueName": "C:\\Users\\Alguien\\Source\\Repos\\UserTicketsApp\\UsersMicroService\\UserTests\\UserTests.csproj",
       "projectName": "UserTests",
-      "projectPath": "C:\\Users\\admin\\Documents\\GitHub\\UserTicketsApp\\UsersMicroService\\UserTests\\UserTests.csproj",
-      "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\admin\\Documents\\GitHub\\UserTicketsApp\\UsersMicroService\\UserTests\\obj\\",
+      "projectPath": "C:\\Users\\Alguien\\Source\\Repos\\UserTicketsApp\\UsersMicroService\\UserTests\\UserTests.csproj",
+      "packagesPath": "C:\\Users\\Alguien\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Alguien\\Source\\Repos\\UserTicketsApp\\UsersMicroService\\UserTests\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\Alguien\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -8612,15 +8605,14 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\admin\\Documents\\GitHub\\UserTicketsApp\\UsersMicroService\\UsersMicroService\\UsersMicroService.csproj": {
-              "projectPath": "C:\\Users\\admin\\Documents\\GitHub\\UserTicketsApp\\UsersMicroService\\UsersMicroService\\UsersMicroService.csproj"
+            "C:\\Users\\Alguien\\Source\\Repos\\UserTicketsApp\\UsersMicroService\\UsersMicroService\\UsersMicroService.csproj": {
+              "projectPath": "C:\\Users\\Alguien\\Source\\Repos\\UserTicketsApp\\UsersMicroService\\UsersMicroService\\UsersMicroService.csproj"
             }
           }
         }
@@ -8671,7 +8663,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.415\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.408\\RuntimeIdentifierGraph.json"
       }
     }
   }
