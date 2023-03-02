@@ -9,6 +9,8 @@
 /TicketsMicroservice/TicketServiceTests/obj
 /TicketsMicroservice/TicketServiceTests/bin/Debug/netcoreapp3.1
 /TicketsMicroservice/.vs/TicketsMicroservice/v16/TestStore/0
+/UsersMicroService/UsersMicroService/obj
+/UsersMicroService/UserTests/obj
 /UsersMicroService/.vs/UsersMicroService/v16/TestStore/0
 /UsersMicroService/UsersMicroService/obj/Debug/netcoreapp3.1
 /UsersMicroService/UsersMicroService/bin/Debug/netcoreapp3.1
