@@ -10,12 +10,14 @@
 /TicketsMicroservice/TicketServiceTests/obj/*
 /TicketsMicroservice/TicketServiceTests/bin
 /TicketsMicroservice/TicketServiceTests/bin/*
-/TicketsMicroservice/.vs/TicketsMicroservice/v16/TestStore/0
+/TicketsMicroservice/.vs/TicketsMicroservice/v16
+/TicketsMicroservice/.vs/TicketsMicroservice/v16/*
 /UsersMicroService/UsersMicroService/obj
 /UsersMicroService/UsersMicroService/obj/*
 /UsersMicroService/UserTests/obj
 /UsersMicroService/UserTests/obj/*
-/UsersMicroService/.vs/UsersMicroService/v16/TestStore/0
+/UsersMicroService/.vs/UsersMicroService/v16
+/UsersMicroService/.vs/UsersMicroService/v16/*
 /UsersMicroService/UsersMicroService/bin
 /UsersMicroService/UsersMicroService/bin/*
 /UsersMicroService/UsersMicroService/UserTests/obj
