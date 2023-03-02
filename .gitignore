@@ -11,3 +11,6 @@
 /TicketsMicroservice/TicketServiceTests/bin/Debug/netcoreapp3.1
 /TicketsMicroservice/.vs/TicketsMicroservice/v16/TestStore/0
 /UsersMicroService/UsersMicroService/obj/Debug/netcoreapp3.1
+/UsersMicroService/UsersMicroService/bin/Debug/netcoreapp3.1
+/UsersMicroService/UsersMicroService/UserTests/obj/Debug/netcoreapp3.1
+/UsersMicroSerice/UserTests/obj/Debug/netcoreapp3.1
